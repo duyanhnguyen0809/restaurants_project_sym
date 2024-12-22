@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Restaurant Index{% endblock %}
+
+{% block body %}
+    <h1 class="text-2xl font-bold mb-4">Restaurant Index</h1>
+
+    <table class="table-auto w-full bg-white shadow rounded">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="px-4 py-2 border">Id</th>
+                <th class="px-4 py-2 border">Name</th>
+                <th class="px-4 py-2 border">Location</th>
+                <th class="px-4 py-2 border">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for restaurant in restaurants %}
+            <tr class="hover:bg-gray-50">
+                <td class="px-4 py-2 border">{{ restaurant.id }}</td>
+                <td class="px-4 py-2 border">{{ restaurant.name }}</td>
+                <td class="px-4 py-2 border">{{ restaurant.location }}</td>
+                <td class="px-4 py-2 border space-x-2">
+                    <a href="{{ path('app_restaurant_show', {'id': restaurant.id}) }}" class="inline-block px-4 py-2 font-bold rounded bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 text-white transition ease-in-out duration-200">Show</a>
+                    <a href="{{ path('app_restaurant_edit', {'id': restaurant.id}) }}" class="inline-block px-4 py-2 font-bold rounded bg-green-600 hover:bg-green-700 focus:ring-2 focus:ring-green-500 text-white transition ease-in-out duration-200">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="text-center py-4">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mt-4">
+        <a href="{{ path('app_restaurant_new') }}" class="inline-block px-6 py-2 font-bold rounded bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 text-white transition ease-in-out duration-200">Create New</a>
+    </div>
+{% endblock %}

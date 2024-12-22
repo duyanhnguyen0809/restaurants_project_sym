@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			{% block title %}My Symfony App
+			{% endblock %}
+		</title>
+		<link rel="stylesheet" href="{{ asset('build/app.css') }}">
+	</head>
+	<body
+		class="bg-gray-100 text-gray-800">
+
+		<!-- Flash Messages -->
+		{% for label, messages in app.flashes %}
+			<div class="container mx-auto mt-4">
+				{% for message in messages %}
+					<div class="alert bg-{{ label }}-100 text-{{ label }}-800 px-4 py-3 rounded">
+						{{ message }}
+					</div>
+				{% endfor %}
+			</div>
+		{% endfor %}
+
+		<!-- Header -->
+		<header class="bg-blue-600 text-white">
+			<div class="container mx-auto flex justify-between items-center py-4">
+				<h1 class="text-2xl font-bold">My Symfony App</h1>
+				<nav>
+					<ul class="flex space-x-6">
+						<li>
+							<a href="{{ path('app_home') }}" class="hover:underline">Home</a>
+						</li>
+
+						<!-- Role-based Navigation -->
+						{% if app.user %}
+							{% if is_granted('ROLE_ADMIN') %}
+								<li>
+									<a href="{{ path('admin_dashboard') }}" class="hover:underline bg-red-600 px-3 py-1 rounded">Admin</a>
+								</li>
+							{% elseif is_granted('ROLE_USER') %}
+								<li>
+									<a href="{{ path('user_dashboard') }}" class="hover:underline bg-green-600 px-3 py-1 rounded">Profile</a>
+								</li>
+							{% elseif is_granted('ROLE_BANNED') %}
+								<li>
+									<p class="text-red-600 font-bold">You are banned from this site.</p>
+								</li>
+							{% endif %}
+
+							<!-- Logout -->
+							<li>
+								<form action="{{ path('app_logout') }}" class="inline">
+									<button type="submit" class="hover:underline text-red-600">Logout</button>
+								</form>
+							</li>
+						{% else %}
+							<!-- Login -->
+							<li>
+								<a href="{{ path('app_login') }}" class="hover:underline">Login</a>
+							</li>
+						{% endif %}
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<!-- Main Content -->
+		<main class="container mx-auto my-8"> {% block body %}{% endblock %}
+			</main>
+
+			<!-- Footer -->
+			<footer class="bg-gray-800 text-white">
+				<div class="container mx-auto text-center py-4">
+					&copy;
+					{{ "now"|date("Y") }}
+					My Symfony App. All rights reserved.
+				</div>
+			</footer>
+		</body>
+	</html>

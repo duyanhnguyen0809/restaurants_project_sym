@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Menu List{% endblock %}
+
+{% block body %}
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Menu List</h1>
+
+    <table class="table-auto w-full bg-white shadow rounded">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="px-4 py-2 border">Menu Name</th>
+                <th class="px-4 py-2 border">Price</th>
+                <th class="px-4 py-2 border">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for menu in menus %}
+            <tr class="hover:bg-gray-50">
+                <td class="px-4 py-2 border">{{ menu.name }}</td>
+                <td class="px-4 py-2 border">{{ menu.price|number_format(2) }}</td>
+                <td class="px-4 py-2 border space-x-2">
+                    <a href="{{ path('app_menu_show', {'id': menu.id}) }}" class="text-blue-600 hover:underline">Show</a>
+                    <a href="{{ path('app_menu_edit', {'id': menu.id}) }}" class="text-green-600 hover:underline">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3" class="text-center py-4">No menus found.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mt-6 text-center">
+        <a href="{{ path('app_menu_new') }}" class="inline-block px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded transition ease-in-out duration-200">
+            Create New Menu
+        </a>
+    </div>
+{% endblock %}

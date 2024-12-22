@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Table Details{% endblock %}
+
+{% block body %}
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Table Details</h1>
+
+    <table class="table-auto w-full bg-white shadow rounded mb-4">
+        <tbody>
+            <tr>
+                <th class="px-4 py-2 border">Table Number</th>
+                <td class="px-4 py-2 border">{{ table.number }}</td>
+            </tr>
+            <tr>
+                <th class="px-4 py-2 border">Capacity</th>
+                <td class="px-4 py-2 border">{{ table.capacity }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center space-x-4">
+        <a href="{{ path('app_table_index') }}" class="inline-block px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded transition ease-in-out duration-200">
+            Back to List
+        </a>
+        <a href="{{ path('app_table_edit', {'id': table.id}) }}" class="inline-block px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded transition ease-in-out duration-200">
+            Edit
+        </a>
+    </div>
+{% endblock %}
